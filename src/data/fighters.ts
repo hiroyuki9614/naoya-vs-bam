@@ -29,7 +29,7 @@ export const fighters: Fighter[] = [
     stance: 'Orthodox',
     country: 'Japan',
     weightClass: 'Super Bantamweight',
-    imagePath: '/images/inoue-placeholder.png',
+    imagePath: 'images/inoue-placeholder.png',
     accent: '#d92323',
     timeline: [
       { year: '2012', event: 'プロデビュー' },
@@ -58,7 +58,7 @@ export const fighters: Fighter[] = [
     stance: 'Southpaw',
     country: 'USA',
     weightClass: 'Super Flyweight',
-    imagePath: '/images/bam-placeholder.png',
+    imagePath: 'images/bam-placeholder.png',
     accent: '#d7a632',
     timeline: [
       { year: '2017', event: 'プロデビュー' },

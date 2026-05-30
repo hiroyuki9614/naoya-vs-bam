@@ -11,7 +11,7 @@ Vite + React + TypeScript で作成した、井上尚弥 vs Jesse “Bam” Rodr
 - 戦績カウントアップ
 - タイムライン上を丸が移動する演出
 - SVGの五角形レーダーチャートアニメーション
-- 実写画像の代わりに `/public/images/inoue-placeholder.png` と `/public/images/bam-placeholder.png` を参照し、存在しない場合はCSSシルエットを表示
+- 実写画像の代わりに `public/images/inoue-placeholder.png` と `public/images/bam-placeholder.png` を参照し、存在しない場合はCSSシルエットを表示
 
 ## 起動方法
 
@@ -26,7 +26,16 @@ npm run dev
 npm run build
 ```
 
-`vite.config.ts` で `base: './'` を指定しているため、GitHub Pages のサブディレクトリ配信でも動作しやすい設定です。
+`vite.config.ts` で `base: './'` を指定しているため、GitHub Pages のプロジェクトサイト配信でも相対パスでアセットを読み込めます。
+
+## GitHub Pages で公開する方法
+
+このリポジトリには GitHub Actions で `dist` を GitHub Pages に公開するワークフローを追加しています。
+
+1. GitHub のリポジトリ画面で **Settings > Pages** を開きます。
+2. **Build and deployment** の **Source** を **GitHub Actions** に設定します。
+3. `work` / `main` / `master` ブランチへ push するか、Actions タブから **Deploy to GitHub Pages** を手動実行します。
+4. デプロイ完了後、Actions の `github-pages` 環境に表示される URL で公開ページを確認できます。
 
 ## データの変更
 

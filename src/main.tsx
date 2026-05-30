@@ -37,6 +37,7 @@ function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
 
 function FighterVisual({ fighter, side }: { fighter: Fighter; side: 'left' | 'right' }) {
   const [imageError, setImageError] = useState(false);
+  const imageSrc = `${import.meta.env.BASE_URL}${fighter.imagePath}`;
 
   return (
     <motion.div
@@ -47,7 +48,7 @@ function FighterVisual({ fighter, side }: { fighter: Fighter; side: 'left' | 'ri
     >
       <div className="portraitFrame" style={{ '--fighter-accent': fighter.accent } as React.CSSProperties}>
         {!imageError ? (
-          <img src={fighter.imagePath} alt={`${fighter.displayName} placeholder`} onError={() => setImageError(true)} />
+          <img src={imageSrc} alt={`${fighter.displayName} placeholder`} onError={() => setImageError(true)} />
         ) : (
           <div className="fallbackPortrait" aria-label={`${fighter.displayName} silhouette`}>
             <div className="head" />
