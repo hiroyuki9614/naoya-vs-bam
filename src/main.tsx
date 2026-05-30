@@ -68,18 +68,22 @@ function Hero() {
     <header className="hero">
       <div className="flameLayer" />
       <div className="sparks" />
-      <motion.p className="unofficial" initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}>
-        Unofficial Fan Made Landing Page
-      </motion.p>
-      <motion.h1 initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7 }}>
-        井上尚弥 <span>VS</span> バム・ロドリゲス
-      </motion.h1>
-      <motion.p className="dateLine" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}>
+      <motion.p className="dateLine" initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}>
         DREAM MATCH / DATE TBA
       </motion.p>
-      <motion.p className="tagline" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 }}>
+      <motion.h1 initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.15 }}>
+        井上尚弥 <span>VS</span> バム・ロドリゲス
+      </motion.h1>
+      <motion.p className="tagline" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}>
+        もし実現したら、軽量級の歴史が動く。
+        <br />
         軽量級ボクシングの“完成形”は、怪物か、天才サウスポーか。
       </motion.p>
+      <motion.div className="heroDisclaimer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 }}>
+        <p>非公式ファンメイド仮想対戦LPです。</p>
+        <p>正式発表・試合決定を意味するものではありません。</p>
+        <p>選手、所属団体、プロモーター、配信会社とは関係ありません。</p>
+      </motion.div>
       <div className="heroMatchup">
         <FighterVisual fighter={fighters[0]} side="left" />
         <motion.div className="vsBadge" initial={{ rotate: -15, scale: 0 }} animate={{ rotate: 0, scale: 1 }} transition={{ delay: 0.7, type: 'spring' }}>
@@ -278,8 +282,10 @@ function Predictions() {
 function Footer() {
   return (
     <footer className="footer">
-      <p>このページは非公式ファン制作ページです。</p>
-      <p>選手、所属団体、プロモーター、配信会社とは関係ありません。公式ロゴ・団体ロゴ・配信会社ロゴは使用していません。</p>
+      <p>非公式ファンメイド仮想対戦LPです。</p>
+      <p>正式発表・試合決定を意味するものではありません。</p>
+      <p>選手、所属団体、プロモーター、配信会社とは関係ありません。</p>
+      <p>公式ロゴ・団体ロゴ・配信会社ロゴは使用していません。</p>
       <p>画像・動画は権利確認済み素材のみ使用する想定です。現在の選手画像はAIイラスト/シルエット/プレースホルダーで代替しています。</p>
     </footer>
   );
