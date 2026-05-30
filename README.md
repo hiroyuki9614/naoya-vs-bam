@@ -1,4 +1,6 @@
-# 井上尚弥 VS バム・ロドリゲス 非公式ファンLP
+# naoya-vs-bam
+
+井上尚弥 VS バム・ロドリゲス 非公式ファンLPです。
 
 Vite + React + TypeScript で作成した、井上尚弥 vs Jesse “Bam” Rodriguez の仮想対戦を盛り上げる非公式ファン制作ランディングページです。
 
@@ -30,7 +32,7 @@ npm run build
 
 ## GitHub Pages で公開する方法
 
-このリポジトリには GitHub Actions で `dist` を GitHub Pages に公開するワークフローを追加しています。
+このリポジトリ名は `naoya-vs-bam` を想定しています。GitHub Actions で `dist` を GitHub Pages に公開するワークフローを追加しています。
 
 1. GitHub のリポジトリ画面で **Settings > Pages** を開きます。
 2. **Build and deployment** の **Source** を **GitHub Actions** に設定します。
