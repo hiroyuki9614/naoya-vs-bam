@@ -74,8 +74,11 @@ function Hero() {
       <motion.h1 initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7 }}>
         井上尚弥 <span>VS</span> バム・ロドリゲス
       </motion.h1>
+      <motion.p className="dateLine" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}>
+        DREAM MATCH / DATE TBA
+      </motion.p>
       <motion.p className="tagline" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 }}>
-        xxxx年xx月xx日 軽量級の正統派完成形が決まる
+        軽量級ボクシングの“完成形”は、怪物か、天才サウスポーか。
       </motion.p>
       <div className="heroMatchup">
         <FighterVisual fighter={fighters[0]} side="left" />
