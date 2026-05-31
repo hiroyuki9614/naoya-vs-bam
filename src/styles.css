@@ -645,3 +645,25 @@ main { position: relative; overflow: hidden; }
     animation: none;
   }
 }
+<<<<<<< HEAD
+
+.blackoutScene {
+  background: #000;
+}
+
+.blackoutBreath {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.055), transparent 22%),
+    repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 5px);
+  mix-blend-mode: screen;
+  filter: blur(1.2px);
+}
+
+.lpReveal {
+  transform-origin: top center;
+}
+=======
+>>>>>>> origin/main

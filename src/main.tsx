@@ -306,6 +306,21 @@ function App() {
   return (
     <>
       {isVer2 && !openingComplete && <OpeningSequence onComplete={() => setOpeningComplete(true)} />}
+<<<<<<< HEAD
+      <motion.main
+        className={isVer2 && !openingComplete ? 'lpBehindOpening' : 'lpReveal'}
+        initial={isVer2 ? { opacity: 0, filter: 'brightness(0.42)' } : false}
+        animate={{ opacity: !isVer2 || openingComplete ? 1 : 0, filter: !isVer2 || openingComplete ? 'brightness(1)' : 'brightness(0.42)' }}
+        transition={{ duration: openingComplete ? 1.25 : 0.2, ease: 'easeOut', delay: openingComplete && isVer2 ? 0.12 : 0 }}
+      >
+        <Hero />
+        <Profiles />
+        <Timeline />
+        <Comparison />
+        <Predictions />
+        <Footer />
+      </motion.main>
+=======
       <main className={isVer2 && !openingComplete ? 'lpBehindOpening' : undefined}>
       <Hero />
       <Profiles />
@@ -314,6 +329,7 @@ function App() {
       <Predictions />
       <Footer />
       </main>
+>>>>>>> origin/main
     </>
   );
 }
