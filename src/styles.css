@@ -367,3 +367,285 @@ main { position: relative; overflow: hidden; }
   .timelineTrack { padding-left: 34px; }
   .radarCard text { font-size: 10px; }
 }
+
+.lpBehindOpening {
+  pointer-events: none;
+  user-select: none;
+}
+
+.openingOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #000;
+  color: #fff;
+  isolation: isolate;
+}
+
+.openingScene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.055), transparent 32%),
+    linear-gradient(180deg, #020202 0%, #050505 45%, #000 100%);
+}
+
+.skipOpening {
+  position: fixed;
+  z-index: 1010;
+  top: max(18px, env(safe-area-inset-top));
+  right: max(18px, env(safe-area-inset-right));
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.46);
+  color: rgba(255, 255, 255, 0.82);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.skipOpening:hover,
+.skipOpening:focus-visible {
+  border-color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+}
+
+.filmGrain {
+  position: absolute;
+  inset: -40%;
+  z-index: 1001;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: screen;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.55) 0 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.3) 0 1px, transparent 1px);
+  background-size: 31px 37px, 47px 53px;
+  animation: grainDrift 9s steps(7) infinite;
+}
+
+.typingText {
+  width: min(920px, calc(100% - 40px));
+  margin: 0;
+  color: rgba(255, 255, 255, 0.93);
+  font-size: clamp(1.55rem, 5.4vw, 4.6rem);
+  font-weight: 900;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-align: left;
+  text-shadow: 0 0 28px rgba(255, 255, 255, 0.08);
+  white-space: pre-wrap;
+}
+
+.typingCaret {
+  display: inline-block;
+  width: 0.08em;
+  height: 0.9em;
+  margin-left: 0.1em;
+  transform: translateY(0.13em);
+  background: rgba(255, 255, 255, 0.86);
+  animation: caretBlink 0.85s steps(2, jump-none) infinite;
+}
+
+.wordScene::before,
+.collisionScene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px);
+  background-size: 16vw 100%, 100% 18vh;
+  opacity: 0.24;
+}
+
+.wordScene-red {
+  background: radial-gradient(circle at 18% 50%, rgba(174, 15, 24, 0.28), transparent 34%), #000;
+}
+
+.wordScene-blue {
+  background: radial-gradient(circle at 82% 50%, rgba(18, 83, 190, 0.31), transparent 34%), #000;
+}
+
+.sceneLabel {
+  position: absolute;
+  left: clamp(18px, 4vw, 54px);
+  top: clamp(58px, 9vw, 96px);
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.72rem, 1.5vw, 1rem);
+  font-weight: 900;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+}
+
+.keywordCloud {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.keyword {
+  position: absolute;
+  display: inline-block;
+  max-width: min(56vw, 720px);
+  color: rgba(255, 255, 255, 0.84);
+  font-weight: 1000;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+
+.keyword-red {
+  color: rgba(255, 58, 69, 0.82);
+  text-shadow: 0 0 22px rgba(186, 18, 29, 0.18);
+}
+
+.keyword-blue {
+  color: rgba(73, 146, 255, 0.82);
+  letter-spacing: -0.025em;
+  text-shadow: 0 0 20px rgba(24, 89, 196, 0.16);
+}
+
+.keywordCloud-blue .keyword {
+  font-style: italic;
+}
+
+.collisionScene {
+  background:
+    radial-gradient(circle at 36% 50%, rgba(178, 16, 30, 0.27), transparent 30%),
+    radial-gradient(circle at 64% 50%, rgba(20, 83, 184, 0.3), transparent 32%),
+    #000;
+}
+
+.collisionScene .keyword {
+  opacity: 0.68;
+  filter: saturate(0.92);
+}
+
+.witnessText {
+  position: relative;
+  z-index: 3;
+  width: min(760px, calc(100% - 36px));
+  padding: clamp(24px, 5vw, 52px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.68);
+  box-shadow: 0 22px 90px rgba(0, 0, 0, 0.74);
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.witnessText span,
+.witnessText strong {
+  display: block;
+  color: #fff;
+  text-shadow: none;
+}
+
+.witnessText span {
+  margin-bottom: 12px;
+  font-size: clamp(1.05rem, 2.8vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.witnessText strong {
+  font-size: clamp(1.35rem, 4.4vw, 3.5rem);
+  font-weight: 1000;
+  letter-spacing: 0.03em;
+}
+
+.crtScene {
+  background: #000;
+}
+
+.crtVanish {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12), transparent 34%),
+    #000;
+  transform-origin: center;
+}
+
+.crtLine {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+  transform-origin: center;
+}
+
+.reducedOpening {
+  gap: 12px;
+  padding: 28px;
+  text-align: center;
+}
+
+.reducedOpening p,
+.reducedOpening h1,
+.reducedOpening span {
+  margin: 0;
+}
+
+.reducedOpening p {
+  color: #ffd87a;
+  font-weight: 1000;
+  letter-spacing: 0.16em;
+}
+
+.reducedOpening h1 {
+  font-size: clamp(2rem, 8vw, 5.4rem);
+  line-height: 1;
+}
+
+.reducedOpening span {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@keyframes grainDrift {
+  0% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(-3%, 2%, 0); }
+  50% { transform: translate3d(2%, -4%, 0); }
+  75% { transform: translate3d(4%, 3%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes caretBlink {
+  50% { opacity: 0; }
+}
+
+@media (max-width: 680px) {
+  .skipOpening { top: 12px; right: 12px; padding: 9px 13px; }
+  .typingText { width: min(100% - 28px, 560px); font-size: clamp(1.42rem, 8vw, 3.1rem); }
+  .sceneLabel { top: 62px; letter-spacing: 0.22em; }
+  .keyword { max-width: 84vw; white-space: normal; }
+  .witnessText { width: min(100% - 28px, 560px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filmGrain,
+  .typingCaret {
+    animation: none;
+  }
+}

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { fighters, type Fighter } from './data/fighters';
 import { predictions } from './data/predictions';
+import { OpeningSequence } from './components/OpeningSequence';
 import './styles.css';
 
 function useCountUp(target: number, active: boolean, duration = 1200) {
@@ -26,6 +27,11 @@ function useCountUp(target: number, active: boolean, duration = 1200) {
   return value;
 }
 
+function getPublicImageSrc(imagePath: string) {
+  const isVer2 = typeof window !== 'undefined' && window.location.pathname.split('/').includes('ver2');
+  const relativeBase = isVer2 && import.meta.env.BASE_URL === './' ? '../' : import.meta.env.BASE_URL;
+  return `${relativeBase}${imagePath}`;
+}
 function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
   return (
     <div className="sectionTitle">
@@ -37,7 +43,7 @@ function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
 
 function FighterVisual({ fighter, side }: { fighter: Fighter; side: 'left' | 'right' }) {
   const [imageError, setImageError] = useState(false);
-  const imageSrc = `${import.meta.env.BASE_URL}${fighter.imagePath}`;
+  const imageSrc = getPublicImageSrc(fighter.imagePath);
 
   return (
     <motion.div
@@ -292,15 +298,21 @@ function Footer() {
 }
 
 function App() {
+  const isVer2 = typeof window !== 'undefined' && window.location.pathname.split('/').includes('ver2');
+  const [openingComplete, setOpeningComplete] = useState(!isVer2);
+
   return (
-    <main>
+    <>
+      {isVer2 && !openingComplete && <OpeningSequence onComplete={() => setOpeningComplete(true)} />}
+      <main className={isVer2 && !openingComplete ? 'lpBehindOpening' : undefined}>
       <Hero />
       <Profiles />
       <Timeline />
       <Comparison />
       <Predictions />
       <Footer />
-    </main>
+      </main>
+    </>
   );
 }
 
