@@ -5,7 +5,11 @@ type OpeningSequenceProps = {
   onComplete: () => void;
 };
 
+<<<<<<< HEAD
 type OpeningScene = 'typing' | 'typingExit' | 'inoue' | 'bam' | 'collision' | 'crt' | 'blackout';
+=======
+type OpeningScene = 'typing' | 'typingExit' | 'inoue' | 'bam' | 'collision' | 'crt';
+>>>>>>> origin/main
 
 const introText = '2026年年末\n軽量級全歴史で最高を決める勝負が始まる！？';
 
@@ -296,6 +300,7 @@ function CrtTransition() {
   );
 }
 
+<<<<<<< HEAD
 function BlackoutScene() {
   return (
     <motion.div
@@ -316,6 +321,8 @@ function BlackoutScene() {
   );
 }
 
+=======
+>>>>>>> origin/main
 function ReducedMotionIntro({ onComplete }: OpeningSequenceProps) {
   useEffect(() => {
     const timer = window.setTimeout(onComplete, 1800);
@@ -359,8 +366,12 @@ export function OpeningSequence({ onComplete }: OpeningSequenceProps) {
       inoue: 'bam',
       bam: 'collision',
       collision: 'crt',
+<<<<<<< HEAD
       crt: 'blackout',
       blackout: 'complete',
+=======
+      crt: 'complete',
+>>>>>>> origin/main
     };
     const durations: Partial<Record<OpeningScene, number>> = {
       typingExit: 1400,
@@ -368,7 +379,10 @@ export function OpeningSequence({ onComplete }: OpeningSequenceProps) {
       bam: 5600,
       collision: 5000,
       crt: 1150,
+<<<<<<< HEAD
       blackout: 1500,
+=======
+>>>>>>> origin/main
     };
     const target = nextScene[scene];
     if (!target) return undefined;
@@ -397,7 +411,10 @@ export function OpeningSequence({ onComplete }: OpeningSequenceProps) {
         {scene === 'bam' && <WordScene key="bam" tone="blue" />}
         {scene === 'collision' && <CollisionScene key="collision" />}
         {scene === 'crt' && <CrtTransition key="crt" />}
+<<<<<<< HEAD
         {scene === 'blackout' && <BlackoutScene key="blackout" />}
+=======
+>>>>>>> origin/main
       </AnimatePresence>
     </div>
   );

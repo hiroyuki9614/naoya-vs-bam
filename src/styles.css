@@ -645,6 +645,7 @@ main { position: relative; overflow: hidden; }
     animation: none;
   }
 }
+<<<<<<< HEAD
 
 .blackoutScene {
   background: #000;
@@ -664,3 +665,5 @@ main { position: relative; overflow: hidden; }
 .lpReveal {
   transform-origin: top center;
 }
+=======
+>>>>>>> origin/main
