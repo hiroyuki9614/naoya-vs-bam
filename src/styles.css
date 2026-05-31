@@ -502,13 +502,13 @@ main { position: relative; overflow: hidden; }
   text-transform: uppercase;
 }
 
-.keywordCloud {
+.titleWordCloud {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
 
-.keyword {
+.titleWord {
   position: absolute;
   display: inline-block;
   max-width: min(72vw, 940px);
@@ -522,18 +522,22 @@ main { position: relative; overflow: hidden; }
   mix-blend-mode: screen;
 }
 
-.keyword-red {
+.titleWord-emphasis {
+  letter-spacing: -0.07em;
+}
+
+.titleWord-red {
   color: rgba(255, 48, 59, 0.84);
   text-shadow: 0 0 14px rgba(186, 18, 29, 0.12);
 }
 
-.keyword-blue {
+.titleWord-blue {
   color: rgba(67, 139, 255, 0.84);
   letter-spacing: -0.035em;
   text-shadow: 0 0 14px rgba(24, 89, 196, 0.12);
 }
 
-.keywordCloud-blue .keyword {
+.titleWordCloud-blue .titleWord {
   font-style: italic;
 }
 
@@ -544,7 +548,7 @@ main { position: relative; overflow: hidden; }
     #000;
 }
 
-.collisionScene .keyword {
+.collisionScene .titleWord {
   opacity: 0.68;
   filter: saturate(0.92);
 }
@@ -631,7 +635,7 @@ main { position: relative; overflow: hidden; }
   .typingFrame { width: min(100% - 28px, 560px); min-height: 11.2rem; align-items: center; }
   .typingText { font-size: clamp(1.42rem, 8vw, 3.1rem); }
   .sceneLabel { top: 62px; letter-spacing: 0.22em; }
-  .keyword { max-width: 92vw; white-space: normal; }
+  .titleWord { max-width: 92vw; white-space: normal; }
   .witnessText { width: min(100% - 28px, 560px); font-size: clamp(2rem, 10vw, 4.2rem); }
 }
 

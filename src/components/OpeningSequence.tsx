@@ -75,26 +75,76 @@ const bamWords = [
   '頂点への侵攻',
 ];
 
-function makeWordField(words: string[], count: number, seed: number) {
+type WordTone = 'red' | 'blue';
+
+type WordCloudItem = {
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+  rotate: number;
+  scale: number;
+  delay: number;
+  duration: number;
+  startX: number;
+  startY: number;
+  moveX: number;
+  moveY: number;
+  tone: WordTone;
+  emphasis: boolean;
+};
+
+function seededRandom(seed: number) {
+  const value = Math.sin(seed * 12.9898) * 43758.5453;
+  return value - Math.floor(value);
+}
+
+function createWordCloudItems(words: string[], count: number, tone: WordTone, seed: number, totalDuration: number): WordCloudItem[] {
   return Array.from({ length: count }, (_, index) => {
-    const xSeed = Math.sin((index + 1) * (seed + 1.73)) * 10000;
-    const ySeed = Math.sin((index + 1) * (seed + 2.91)) * 10000;
-    const rSeed = Math.sin((index + 1) * (seed + 4.17)) * 10000;
-    const sSeed = Math.sin((index + 1) * (seed + 5.39)) * 10000;
     const progress = index / Math.max(count - 1, 1);
+    const word = words[index % words.length];
+    const spread = tone === 'red' ? -1 : 1;
+    const x = seededRandom(seed + index * 4.11) * 118 - 9;
+    const y = seededRandom(seed + index * 7.37) * 118 - 9;
+    const rotate = seededRandom(seed + index * 5.19) * 46 - 23;
+    const scale = 0.74 + seededRandom(seed + index * 9.73) * 1.95;
+    const angle = seededRandom(seed + index * 2.71) * Math.PI * 2;
+    const distance = 42 + seededRandom(seed + index * 8.43) * 168;
 
     return {
-      id: `${words[index % words.length]}-${index}`,
-      text: words[index % words.length],
-      left: `${Math.abs(xSeed % 100)}%`,
-      top: `${Math.abs(ySeed % 100)}%`,
-      rotate: (rSeed % 34) - 17,
-      size: 0.82 + Math.abs(sSeed % 1.65),
-      delay: Math.pow(progress, 1.85) * 3.1,
-      distanceX: (Math.sin(index * 1.7 + seed) * 180).toFixed(1),
-      distanceY: (Math.cos(index * 1.21 + seed) * 112).toFixed(1),
+      id: `${tone}-${word}-${index}`,
+      text: word,
+      x,
+      y,
+      rotate,
+      scale,
+      delay: Math.pow(progress, 1.95) * totalDuration,
+      duration: 0.68 + seededRandom(seed + index * 3.33) * 1.18,
+      startX: Math.cos(angle) * distance * -1.1 + spread * -46,
+      startY: Math.sin(angle) * distance * -0.82,
+      moveX: Math.cos(angle + 0.8) * distance * 0.55 + spread * 38,
+      moveY: Math.sin(angle + 0.8) * distance * 0.42,
+      tone,
+      emphasis: index % 9 === 0 || word.length > 12,
     };
   });
+}
+
+function useWordCount() {
+  const getCount = useCallback(() => {
+    if (typeof window === 'undefined') return 132;
+    return window.matchMedia('(max-width: 680px)').matches ? 92 : 132;
+  }, []);
+  const [count, setCount] = useState(getCount);
+
+  useEffect(() => {
+    const updateCount = () => setCount(getCount());
+    updateCount();
+    window.addEventListener('resize', updateCount);
+    return () => window.removeEventListener('resize', updateCount);
+  }, [getCount]);
+
+  return count;
 }
 
 function useAcceleratingTypewriter(text: string, active: boolean, onDone: () => void) {
@@ -162,34 +212,47 @@ function TypewriterScene({ exiting, onDone }: { exiting: boolean; onDone: () => 
 }
 
 function KeywordCloud({ words, tone, dense = false }: { words: string[]; tone: 'red' | 'blue' | 'mixed'; dense?: boolean }) {
+  const baseCount = useWordCount();
   const field = useMemo(() => {
     if (tone === 'mixed') {
+      const mixedCount = Math.max(72, Math.round(baseCount * 0.72));
       return [
-        ...makeWordField(inoueWords, 92, 6.2).map((word) => ({ ...word, tone: 'red' as const, delay: word.delay * 0.2 })),
-        ...makeWordField(bamWords, 92, 9.1).map((word) => ({ ...word, tone: 'blue' as const, delay: word.delay * 0.2 })),
+        ...createWordCloudItems(inoueWords, mixedCount, 'red', 62.17, 1.55),
+        ...createWordCloudItems(bamWords, mixedCount, 'blue', 91.41, 1.55),
       ];
     }
 
-    return makeWordField(words, dense ? 132 : 76, tone === 'red' ? 2.4 : 4.8).map((word) => ({ ...word, tone }));
-  }, [dense, tone, words]);
+    const count = dense ? baseCount : Math.round(baseCount * 0.72);
+    return createWordCloudItems(words, count, tone, tone === 'red' ? 24.7 : 48.3, 3.25);
+  }, [baseCount, dense, tone, words]);
 
   return (
-    <div className={`keywordCloud keywordCloud-${tone}`} aria-hidden="true">
-      {field.map((word, index) => (
+    <div className={`titleWordCloud titleWordCloud-${tone}`} aria-hidden="true">
+      {field.map((item) => (
         <motion.span
-          className={`keyword keyword-${word.tone}`}
-          key={`${word.tone}-${word.id}`}
+          className={`titleWord titleWord-${item.tone}${item.emphasis ? ' titleWord-emphasis' : ''}`}
+          key={item.id}
           style={{
-            left: word.left,
-            top: word.top,
-            fontSize: `clamp(${0.92 * word.size}rem, ${1.2 + word.size * 1.5}vw, ${2.3 * word.size}rem)`,
-            zIndex: index,
+            left: `${item.x}%`,
+            top: `${item.y}%`,
+            fontSize: `clamp(${0.86 * item.scale}rem, ${1.05 + item.scale * 1.45}vw, ${2.15 * item.scale}rem)`,
           }}
-          initial={{ opacity: 0, scale: 0.78, x: Number(word.distanceX) * -0.28, y: Number(word.distanceY) * -0.28, rotate: word.rotate }}
-          animate={{ opacity: tone === 'mixed' ? 0.72 : 0.88, scale: tone === 'mixed' ? 1.08 : 1.16, x: Number(word.distanceX), y: Number(word.distanceY), rotate: word.rotate * (tone === 'blue' ? -1 : 1) }}
-          transition={{ duration: tone === 'mixed' ? 0.72 : 1.8, delay: word.delay, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, x: item.startX, y: item.startY, rotate: item.rotate - 10, scale: 0.38 }}
+          animate={{
+            opacity: tone === 'mixed' ? [0, 0.78, 0.66] : [0, 0.96, 0.88],
+            x: [item.startX, item.moveX * 0.45, item.moveX],
+            y: [item.startY, item.moveY * 0.45, item.moveY],
+            rotate: [item.rotate - 10, item.rotate, item.rotate + (item.tone === 'blue' ? -4 : 4)],
+            scale: [0.38, item.scale * 1.06, item.scale],
+          }}
+          transition={{
+            delay: item.delay,
+            duration: tone === 'mixed' ? Math.min(item.duration, 0.82) : item.duration,
+            ease: [0.16, 1, 0.3, 1],
+            times: [0, 0.62, 1],
+          }}
         >
-          {word.text}
+          {item.text}
         </motion.span>
       ))}
     </div>
