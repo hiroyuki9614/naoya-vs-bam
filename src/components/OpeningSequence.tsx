@@ -7,7 +7,7 @@ type OpeningSequenceProps = {
 
 type OpeningScene = 'typing' | 'typingExit' | 'inoue' | 'bam' | 'collision' | 'crt';
 
-const introText = '2026年年末\n軽量級全歴史で最高を決める勝負が始まる';
+const introText = '2026年年末\n軽量級全歴史で最高を決める勝負が始まる！？';
 
 const inoueWords = [
   'Monster',
@@ -18,6 +18,28 @@ const inoueWords = [
   'The Monster',
   '軽量級最強',
   '日本ボクシング史上最高傑作',
+  'Undisputed',
+  '完全支配',
+  '破壊の精度',
+  'No Mercy',
+  '王座統一',
+  '異次元の完成度',
+  '拳の暴君',
+  '歴史を塗り替える男',
+  'Pound for Pound',
+  '無敗の王',
+  'KO Artist',
+  'Ring General',
+  '神速のカウンター',
+  '圧倒的支配',
+  '日本の至宝',
+  '軽量級の頂点',
+  '冷酷な完成形',
+  '爆発力',
+  'Precision Power',
+  '王者の証明',
+  'Inoue Era',
+  '歴史的支配者',
 ];
 
 const bamWords = [
@@ -29,6 +51,28 @@ const bamWords = [
   'Precision',
   'Destroyer',
   '頂点を目指す男',
+  'Future PFP',
+  '天才サウスポー',
+  'Angle Work',
+  'Loma-like Angles',
+  '次世代の王',
+  'スピードの知性',
+  'Generational Talent',
+  'Sharp Mind',
+  '青い閃光',
+  'Southpaw Genius',
+  'Legend Breaker',
+  '階級を超える挑戦',
+  'New Wave',
+  '未来の支配者',
+  'Silent Assassin',
+  '技術で壊す男',
+  'Speed & Angles',
+  '世代交代',
+  'Modern Maestro',
+  '精密機械',
+  'Bam Era',
+  '頂点への侵攻',
 ];
 
 function makeWordField(words: string[], count: number, seed: number) {
@@ -47,8 +91,8 @@ function makeWordField(words: string[], count: number, seed: number) {
       rotate: (rSeed % 34) - 17,
       size: 0.82 + Math.abs(sSeed % 1.65),
       delay: Math.pow(progress, 1.85) * 3.1,
-      distanceX: (Math.sin(index * 1.7 + seed) * 90).toFixed(1),
-      distanceY: (Math.cos(index * 1.21 + seed) * 58).toFixed(1),
+      distanceX: (Math.sin(index * 1.7 + seed) * 180).toFixed(1),
+      distanceY: (Math.cos(index * 1.21 + seed) * 112).toFixed(1),
     };
   });
 }
@@ -102,15 +146,17 @@ function TypewriterScene({ exiting, onDone }: { exiting: boolean; onDone: () => 
       animate={{ opacity: exiting ? 0 : 1 }}
       transition={{ duration: exiting ? 1.4 : 0.8, ease: 'easeInOut' }}
     >
-      <p className="typingText" aria-label={introText}>
-        {typed.split('\n').map((line, index) => (
-          <React.Fragment key={index}>
-            {line}
-            {index === 0 && <br />}
-          </React.Fragment>
-        ))}
-        {!finished && <span className="typingCaret" aria-hidden="true" />}
-      </p>
+      <div className="typingFrame">
+        <p className="typingText" aria-label={introText}>
+          {typed.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index === 0 && <br />}
+            </React.Fragment>
+          ))}
+          <span className="typingCaret" aria-hidden="true">|</span>
+        </p>
+      </div>
     </motion.div>
   );
 }
@@ -119,12 +165,12 @@ function KeywordCloud({ words, tone, dense = false }: { words: string[]; tone: '
   const field = useMemo(() => {
     if (tone === 'mixed') {
       return [
-        ...makeWordField(inoueWords, 36, 6.2).map((word) => ({ ...word, tone: 'red' as const, delay: word.delay * 0.28 })),
-        ...makeWordField(bamWords, 36, 9.1).map((word) => ({ ...word, tone: 'blue' as const, delay: word.delay * 0.28 })),
+        ...makeWordField(inoueWords, 92, 6.2).map((word) => ({ ...word, tone: 'red' as const, delay: word.delay * 0.2 })),
+        ...makeWordField(bamWords, 92, 9.1).map((word) => ({ ...word, tone: 'blue' as const, delay: word.delay * 0.2 })),
       ];
     }
 
-    return makeWordField(words, dense ? 58 : 46, tone === 'red' ? 2.4 : 4.8).map((word) => ({ ...word, tone }));
+    return makeWordField(words, dense ? 132 : 76, tone === 'red' ? 2.4 : 4.8).map((word) => ({ ...word, tone }));
   }, [dense, tone, words]);
 
   return (
@@ -171,10 +217,9 @@ function CollisionScene() {
   return (
     <motion.div className="openingScene collisionScene" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
       <KeywordCloud words={[...inoueWords, ...bamWords]} tone="mixed" />
-      <motion.div className="witnessText" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.05, duration: 0.9, ease: 'easeOut' }}>
-        <span>その次に文字を打つのは</span>
-        <strong>他でもない 我々目撃者だ</strong>
-      </motion.div>
+      <motion.h2 className="witnessText" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.35, duration: 0.9, ease: 'easeOut' }}>
+        次に新たな称号を得るのは誰だ
+      </motion.h2>
     </motion.div>
   );
 }
@@ -237,7 +282,7 @@ export function OpeningSequence({ onComplete }: OpeningSequenceProps) {
       typingExit: 1400,
       inoue: 5600,
       bam: 5600,
-      collision: 4200,
+      collision: 5000,
       crt: 1150,
     };
     const target = nextScene[scene];

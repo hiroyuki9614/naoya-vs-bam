@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap');
+
 :root {
   color: #fff;
   background: #050505;
-  font-family: Inter, "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Zen Kaku Gothic New", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -438,8 +440,16 @@ main { position: relative; overflow: hidden; }
   animation: grainDrift 9s steps(7) infinite;
 }
 
+.typingFrame {
+  width: min(960px, calc(100% - 40px));
+  min-height: clamp(9.4rem, 17vw, 15.6rem);
+  display: flex;
+  align-items: center;
+}
+
 .typingText {
-  width: min(920px, calc(100% - 40px));
+  width: 100%;
+  min-height: 2.7em;
   margin: 0;
   color: rgba(255, 255, 255, 0.93);
   font-size: clamp(1.55rem, 5.4vw, 4.6rem);
@@ -453,12 +463,10 @@ main { position: relative; overflow: hidden; }
 
 .typingCaret {
   display: inline-block;
-  width: 0.08em;
-  height: 0.9em;
-  margin-left: 0.1em;
-  transform: translateY(0.13em);
-  background: rgba(255, 255, 255, 0.86);
-  animation: caretBlink 0.85s steps(2, jump-none) infinite;
+  width: 0.38em;
+  margin-left: 0.08em;
+  color: rgba(255, 255, 255, 0.9);
+  animation: caretBlink 0.72s steps(2, jump-none) infinite;
 }
 
 .wordScene::before,
@@ -503,25 +511,26 @@ main { position: relative; overflow: hidden; }
 .keyword {
   position: absolute;
   display: inline-block;
-  max-width: min(56vw, 720px);
+  max-width: min(72vw, 940px);
   color: rgba(255, 255, 255, 0.84);
   font-weight: 1000;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 0.92;
+  letter-spacing: -0.055em;
   text-transform: uppercase;
   white-space: nowrap;
   will-change: transform, opacity;
+  mix-blend-mode: screen;
 }
 
 .keyword-red {
-  color: rgba(255, 58, 69, 0.82);
-  text-shadow: 0 0 22px rgba(186, 18, 29, 0.18);
+  color: rgba(255, 48, 59, 0.84);
+  text-shadow: 0 0 14px rgba(186, 18, 29, 0.12);
 }
 
 .keyword-blue {
-  color: rgba(73, 146, 255, 0.82);
-  letter-spacing: -0.025em;
-  text-shadow: 0 0 20px rgba(24, 89, 196, 0.16);
+  color: rgba(67, 139, 255, 0.84);
+  letter-spacing: -0.035em;
+  text-shadow: 0 0 14px rgba(24, 89, 196, 0.12);
 }
 
 .keywordCloud-blue .keyword {
@@ -543,33 +552,15 @@ main { position: relative; overflow: hidden; }
 .witnessText {
   position: relative;
   z-index: 3;
-  width: min(760px, calc(100% - 36px));
-  padding: clamp(24px, 5vw, 52px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.68);
-  box-shadow: 0 22px 90px rgba(0, 0, 0, 0.74);
-  text-align: center;
-  backdrop-filter: blur(10px);
-}
-
-.witnessText span,
-.witnessText strong {
-  display: block;
+  width: min(980px, calc(100% - 32px));
+  margin: 0;
   color: #fff;
-  text-shadow: none;
-}
-
-.witnessText span {
-  margin-bottom: 12px;
-  font-size: clamp(1.05rem, 2.8vw, 2rem);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.witnessText strong {
-  font-size: clamp(1.35rem, 4.4vw, 3.5rem);
+  font-size: clamp(1.85rem, 6vw, 5.8rem);
   font-weight: 1000;
-  letter-spacing: 0.03em;
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.92);
 }
 
 .crtScene {
@@ -637,10 +628,11 @@ main { position: relative; overflow: hidden; }
 
 @media (max-width: 680px) {
   .skipOpening { top: 12px; right: 12px; padding: 9px 13px; }
-  .typingText { width: min(100% - 28px, 560px); font-size: clamp(1.42rem, 8vw, 3.1rem); }
+  .typingFrame { width: min(100% - 28px, 560px); min-height: 11.2rem; align-items: center; }
+  .typingText { font-size: clamp(1.42rem, 8vw, 3.1rem); }
   .sceneLabel { top: 62px; letter-spacing: 0.22em; }
-  .keyword { max-width: 84vw; white-space: normal; }
-  .witnessText { width: min(100% - 28px, 560px); }
+  .keyword { max-width: 92vw; white-space: normal; }
+  .witnessText { width: min(100% - 28px, 560px); font-size: clamp(2rem, 10vw, 4.2rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {

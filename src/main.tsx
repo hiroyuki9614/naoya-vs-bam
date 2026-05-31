@@ -27,11 +27,13 @@ function useCountUp(target: number, active: boolean, duration = 1200) {
   return value;
 }
 
+
 function getPublicImageSrc(imagePath: string) {
   const isVer2 = typeof window !== 'undefined' && window.location.pathname.split('/').includes('ver2');
   const relativeBase = isVer2 && import.meta.env.BASE_URL === './' ? '../' : import.meta.env.BASE_URL;
   return `${relativeBase}${imagePath}`;
 }
+
 function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
   return (
     <div className="sectionTitle">
