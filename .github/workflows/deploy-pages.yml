@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Check for merge conflict markers
+        run: npm run check:conflicts
+
       - name: Build
         run: npm run build
 

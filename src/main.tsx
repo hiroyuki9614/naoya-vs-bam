@@ -306,7 +306,6 @@ function App() {
   return (
     <>
       {isVer2 && !openingComplete && <OpeningSequence onComplete={() => setOpeningComplete(true)} />}
-<<<<<<< HEAD
       <motion.main
         className={isVer2 && !openingComplete ? 'lpBehindOpening' : 'lpReveal'}
         initial={isVer2 ? { opacity: 0, filter: 'brightness(0.42)' } : false}
@@ -320,16 +319,6 @@ function App() {
         <Predictions />
         <Footer />
       </motion.main>
-=======
-      <main className={isVer2 && !openingComplete ? 'lpBehindOpening' : undefined}>
-      <Hero />
-      <Profiles />
-      <Timeline />
-      <Comparison />
-      <Predictions />
-      <Footer />
-      </main>
->>>>>>> origin/main
     </>
   );
 }
